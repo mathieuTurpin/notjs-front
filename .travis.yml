@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+- '0.10'
+deploy:
+  provider: heroku
+  api_key:
+    secure: SUH0jCy4ocVHJItk+nDF8QC6tAdOrIqSLPd1Xy/MmW64u4JRyOl0FN3OK9N3YSfwJYvxmdst+EsykRaKy2YoyfHVJdTBSZ2twky6fL+c23BxAoTlMMeGvko2uG5CqMmoc52RIk4D6sOO0bqXK9DYcudQI5EcwysYyWohHTSxigU=
+  app: notjs-front
+  buildpack: "https://github.com/heroku/heroku-buildpack-nodejs.git"
