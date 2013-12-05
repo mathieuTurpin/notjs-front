@@ -1,6 +1,10 @@
-input:valid {border-color: #5CB85C;	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(50,205,50, 0.6);}
-input:invalid {border-color: #FF0000;box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(255,0,0, 0.6);}
+input:valid, textarea:valid {border-color: #5CB85C;	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(50,205,50, 0.6);}
+input:invalid, textarea:invalid {border-color: #FF0000;box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(255,0,0, 0.6);}
 
 .navbar-collapse{float:left;}
 .fb_iframe_widget{width:70px;}
 #nameUser,.fb_iframe_widget{float:right;color:white;padding:14px 0;}
+
+.contenu{margin-top:51px;margin-bottom:20px;}
+#venteForm{max-width:400px;}
+#venteForm button{float:right;}

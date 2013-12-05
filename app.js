@@ -19,6 +19,34 @@ app.get('/', function(req, res) {
     res.render('index.ejs',data);
 });
 
+app.get('/vendre', function(req, res) {
+	res.setHeader("Content-Type", "text/html");
+	var data = {
+		title: 'Vendre',
+		layoutFile: 'layout.ejs'
+	};
+    res.render('vendre.ejs',data);
+});
+
+app.get('/mesventes', function(req, res) {
+	res.setHeader("Content-Type", "text/html");
+	var data = {
+		title: 'Mes ventes',
+		layoutFile: 'layout.ejs'
+	};
+    res.render('mesventes.ejs',data);
+});
+
+app.get('/mesventes/:idVente', function(req, res) {
+	res.setHeader("Content-Type", "text/html");
+	var data = {
+		title: 'Vente',
+		layoutFile: 'layout.ejs',
+		idVente: req.param('idVente')
+	};
+    res.render('vente.ejs',data);
+});
+
 app.use(function(req, res, next){
     res.setHeader('Content-Type', 'text/plain');
     res.send(404, 'Page introuvable !');

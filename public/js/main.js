@@ -2,6 +2,7 @@ $(document).ready(function(){
 	var ws;
 	var myFbId;
 	var myName;
+	var myUserId;
 
 	var initWS = function(){
 		ws.onopen = function()
@@ -11,6 +12,19 @@ $(document).ready(function(){
         	console.log(toSend);
 
         	ws.send(toSend);
+
+        	$("#venteForm").submit(function()
+			{
+				var nomProd = $("#nomProd").val();
+				var prixProd = $("#prixProd").val();
+				var descProd = $("#descProd").val();
+
+				var toSend = JSON.stringify(createSale(nomProd,descProd,prixProd));
+        		console.log(toSend);
+				ws.send(toSend);
+
+				return false;
+			});
         };
 
         ws.onmessage = function (evt)
@@ -22,6 +36,17 @@ $(document).ready(function(){
         		case 'userId':
         			$("#nameUser").html('Bonjour '+myName);
         			console.log("idUser: "+jsonEvt.payload.id);
+        			myUserId = jsonEvt.payload.id;
+        			break;
+        		case 'saleId':
+        			console.log("idVente: "+jsonEvt.payload.id);
+        			var idVente = jsonEvt.payload.id;
+
+        			//var hostname = window.location.hostname; //for localhost
+        			var hostname = window.location.host;
+	        		console.log("hostname: "+hostname+"/mesventes");
+	        		window.location.href = "http://"+hostname+"/mesventes/"+idVente;
+        			break;
         	}
 
         };
@@ -30,6 +55,10 @@ $(document).ready(function(){
 
     var getUserByFb = function(){
     	return {'type':'getUserByFb', payload:{'fbid':myFbId,'name':myName}};
+    };
+
+    var createSale = function(name,description,price){
+    	return {'type':'createSale', payload:{'name':name,'description':description,'price':price,'seller':myUserId}};
     };
 
     window.fbAsyncInit = function() {

@@ -12,9 +12,9 @@
 		<title><%= title %></title>
 
 		<!-- Bootstrap -->
-		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
 
-		<link href="css/main.css" rel="stylesheet">
+		<link href="/css/main.css" rel="stylesheet">
 
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -66,15 +66,18 @@
 			</div>
 		</header>
 		<!-- L'enplacement de la vue -->
-		<%- body %>
+		<div class="contenu container">
+			<h1><%= title %></h1>
+			<%- body %>
+		</div>
 		<footer class="container">
 			<p>&copy; <a href="http://www.nuitdelinfo.com/nuitinfo/teams:notjs:start">Team not.js</a> pour la <a href="http://www.nuitdelinfo.com/nuitinfo/start">Nuit de l'info 2013</a></p>
 		</footer>
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
-		<script src="js/bootstrap.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
 
-		<script src="js/main.js"></script>
+		<script src="/js/main.js"></script>
 	</body>
 </html>
