@@ -1,12 +1,6 @@
 input:valid {border-color: #5CB85C;	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(50,205,50, 0.6);}
 input:invalid {border-color: #FF0000;box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(255,0,0, 0.6);}
 
-.white {color: white;}
-
-/*************** MENU *******************/
-.container > .navbar-header{margin-right: 0px;margin-left: 0px;}
-.container > .navbar-header, .container > .navbar-collapse1{float:left;}
-.container > .navbar-collapse2{float:right;}
-@media (max-width: 768px){.container > .navbar-header{float:right;}.container > .navbar-collapse2{float:none;}.container > .navbar-collapse{margin:0 10px;}}
-@media (min-width: 768px){.navbar-collapse.collapse.navbar-collapse2 {display:none!important;}.navbar-toggle[data-target=".navbar-collapse2"] {display: block;}}
-@media (min-width: 1000px){.navbar-collapse.collapse.navbar-collapse2 {display:block!important;}.navbar-toggle[data-target=".navbar-collapse2"] {display: none;}}
+.navbar-collapse{float:left;}
+.fb_iframe_widget{width:70px;}
+#nameUser,.fb_iframe_widget{float:right;color:white;padding:14px 0;}
