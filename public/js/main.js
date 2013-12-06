@@ -19,6 +19,10 @@ $(document).ready(function(){
 				var prixProd = $("#prixProd").val();
 				var descProd = $("#descProd").val();
 
+				friendLike(nomProd);
+				//friendLike("iPhone 5S");
+				//friendLike("Ile de La Réunion Tourisme (IRT)");
+
 				var toSend = JSON.stringify(createSale(nomProd,descProd,prixProd));
         		console.log(toSend);
 				ws.send(toSend);
@@ -53,10 +57,11 @@ $(document).ready(function(){
         			console.log("idVente: "+jsonEvt.payload.id);
         			var idVente = jsonEvt.payload.id;
 
-        			var hostname = window.location.hostname;
+        			/*var hostname = window.location.hostname;
         			//var hostname = window.location.host; //for localhost
 	        		console.log("hostname: "+hostname+"/mesventes");
-	        		window.location.href = "http://"+hostname+"/mesventes/"+idVente;
+	        		window.location.href = "http://"+hostname+"/mesventes/"+idVente;*/
+	        		alert("Produit mise en vente");
         			break;
         		case 'sales':
         			console.log("listVente: "+jsonEvt.payload.sales);
@@ -172,6 +177,74 @@ $(document).ready(function(){
 			ws = new WebSocket("ws://notjs-back.herokuapp.com");
 
 			initWS();
+		});
+	}
+
+	function friendLike(likeName){
+		console.log("Search friend like: "+likeName);
+		FB.api('/me?fields=friends.limit(10).fields(likes.fields(name),name)', function(response){
+			$.each(response.friends.data,function(index, value){
+				test(value,likeName);
+			});
+			//Search in nextListFriends
+			if(response.friends.paging != undefined && response.friends.paging.next != undefined){
+				searchNextListFriends(response.friends.paging.next,likeName);
+			}
+		});
+	}
+
+	function searchNextListFriends(urlNext,likeName){
+		var urlNext = ''+urlNext;
+		var url = urlNext.split('https://graph.facebook.com');
+		FB.api(url[1], function(response){
+			$.each(response.data,function(index, value){
+				test(value,likeName);
+			});
+
+			//Search in nextListLike
+			if(response.paging != undefined && response.paging.next != undefined){
+				searchNextListFriends(response.paging.next,likeName);
+			}
+		});
+	}
+
+	function test(value,likeName){
+		//Have like
+		var nameFriend = value.name;
+		if(value.likes !== undefined){
+			$.each(value.likes.data,function(i, val){
+				if(val.name == likeName){
+					var li = document.createElement('li');
+					li.innerHTML = nameFriend;
+					$("#result").append(li);
+
+					console.log("FriendName like this product: "+nameFriend);
+				}
+			});
+
+			//Search in nextListLike
+			if(value.likes.paging != undefined && value.likes.paging.next != undefined){
+				searchNextListLike(value.likes.paging.next,likeName,nameFriend);
+			}
+		}
+	}
+
+	function searchNextListLike(urlNext,likeName,nameFriend){
+		var urlNext = ''+urlNext;
+		var url = urlNext.split('https://graph.facebook.com');
+		FB.api(url[1], function(response){
+			$.each(response.data,function(index, value){
+				if(value.name == likeName){
+					var li = document.createElement('li');
+					li.innerHTML = nameFriend;
+					$("#result").append(li);
+
+					console.log("FriendName like this product: "+nameFriend);
+				}							
+			});
+			if(response.paging != undefined && response.paging.next != undefined){
+				searchNextListLike(response.paging.next,likeName,nameFriend);
+			}
 		});
 	}
 });
