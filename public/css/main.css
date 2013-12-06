@@ -8,3 +8,7 @@ input:invalid, textarea:invalid {border-color: #FF0000;box-shadow: 0px 1px 1px r
 .contenu{margin-top:51px;margin-bottom:20px;}
 #venteForm{max-width:400px;}
 #venteForm button{float:right;}
+
+ul{padding:0;list-style-type: none;}
+li{margin: 5px 0;}
+.inline{display: inline;margin-right: 20px;}

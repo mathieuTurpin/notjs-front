@@ -1,6 +1,12 @@
 var express = require('express');
 var app = express();
 
+var WebSocketServer = require('ws').Server , 
+http = require('http') , 
+express = require('express') , 
+app = express() , 
+port = process.env.PORT || 5000;
+
 var engine = require('ejs-locals');
  
 app.configure(function(){
@@ -39,12 +45,15 @@ app.get('/mesventes', function(req, res) {
 
 app.get('/mesventes/:idVente', function(req, res) {
 	res.setHeader("Content-Type", "text/html");
+	
 	var data = {
 		title: 'Vente',
 		layoutFile: 'layout.ejs',
 		idVente: req.param('idVente')
 	};
+
     res.render('vente.ejs',data);
+    
 });
 
 app.use(function(req, res, next){

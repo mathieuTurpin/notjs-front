@@ -25,6 +25,7 @@ $(document).ready(function(){
 
 				return false;
 			});
+
         };
 
         ws.onmessage = function (evt)
@@ -37,21 +38,67 @@ $(document).ready(function(){
         			$("#nameUser").html('Bonjour '+myName);
         			console.log("idUser: "+jsonEvt.payload.id);
         			myUserId = jsonEvt.payload.id;
+
+        			var url = ""+window.location.pathname;
+					console.log(url);
+					var path = url.split("/")[1];
+					if(path == "mesventes"){
+						var toSend = JSON.stringify(getSalesOfUser(myUserId));
+		        		console.log(toSend);
+						ws.send(toSend);
+					}
         			break;
+
         		case 'saleId':
         			console.log("idVente: "+jsonEvt.payload.id);
         			var idVente = jsonEvt.payload.id;
 
-        			//var hostname = window.location.hostname; //for localhost
-        			var hostname = window.location.host;
+        			var hostname = window.location.hostname;
+        			//var hostname = window.location.host; //for localhost
 	        		console.log("hostname: "+hostname+"/mesventes");
 	        		window.location.href = "http://"+hostname+"/mesventes/"+idVente;
+        			break;
+        		case 'sales':
+        			console.log("listVente: "+jsonEvt.payload.sales);
+        			listVenteToHTML(jsonEvt.payload.sales);
         			break;
         	}
 
         };
     }
 
+    var listVenteToHTML = function(data){
+    	var listVenteHtml = $("#listVente");
+
+		$.each(data,function(index, value){
+		    listVenteHtml.append(venteHTML(value.value));
+		});
+    }
+
+    var venteHTML = function(data){
+    	var li = document.createElement('li');
+    	var ul = document.createElement('ul');
+
+    	var nomLi = document.createElement('li');
+    	nomLi.className= "inline";
+		nomLi.innerHTML = "Nom produit: "+data.product;
+
+		var prixLi = document.createElement('li');
+		prixLi.className= "inline";
+		prixLi.innerHTML = "Prix: "+data.price;
+
+		var dateLi = document.createElement('li');
+		dateLi.className= "inline";
+		dateLi.innerHTML = "Date :"+data.date;
+
+		var descDiv = document.createElement('div');
+		descDiv.innerHTML = "Description: "+data.description;
+
+		$(ul).append(nomLi).append(prixLi).append(dateLi).append(descDiv);
+		$(li).append(ul);
+
+		return li;
+    }
 
     var getUserByFb = function(){
     	return {'type':'getUserByFb', payload:{'fbid':myFbId,'name':myName}};
@@ -59,6 +106,10 @@ $(document).ready(function(){
 
     var createSale = function(name,description,price){
     	return {'type':'createSale', payload:{'name':name,'description':description,'price':price,'seller':myUserId}};
+    };
+
+    var getSalesOfUser = function(idUser){
+    	return {"type":"getSalesOfUser","payload":{"seller":idUser}}
     };
 
     window.fbAsyncInit = function() {
