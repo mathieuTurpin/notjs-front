@@ -13,10 +13,10 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', function(req, res) {
 	res.setHeader("Content-Type", "text/html");
 	var data = {
-		title: 'Accueil Team not.js',
+		title: 'Vendre',
 		layoutFile: 'layout.ejs'
 	};
-    res.render('index.ejs',data);
+    res.render('vendre.ejs',data);
 });
 
 app.get('/vendre', function(req, res) {
@@ -31,7 +31,7 @@ app.get('/vendre', function(req, res) {
 app.get('/mesventes', function(req, res) {
 	res.setHeader("Content-Type", "text/html");
 	var data = {
-		title: 'Mes ventes',
+		title: 'Mes Ventes',
 		layoutFile: 'layout.ejs'
 	};
     res.render('mesventes.ejs',data);
