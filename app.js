@@ -1,12 +1,6 @@
 var express = require('express');
 var app = express();
 
-var WebSocketServer = require('ws').Server , 
-http = require('http') , 
-express = require('express') , 
-app = express() , 
-port = process.env.PORT || 5000;
-
 var engine = require('ejs-locals');
  
 app.configure(function(){
